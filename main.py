@@ -4,8 +4,9 @@ window = Tk()
 window.title("Place Your Order Now!")
 window.config(padx=50, pady=50)
 
+comm = "Welcome to Python Pizza Deliveries!"
 canvas = Canvas(height=60, width=300, bg="Green")
-canvas.create_text(150, 30, text="Welcome to Python Pizza Deliveries!", font=("Ariel", 13, "bold"))
+canvas.create_text(150, 30, text=f"{comm}", font=("Ariel", 13, "bold"))
 canvas.grid(row=0, column=0, columnspan=2)
 
 size = Label(text="What size pizza do you want? S, M or L? ")
@@ -22,13 +23,43 @@ add_pepperoni_entry.grid(row=2, column=1)
 extra_cheese_entry = Entry()
 extra_cheese_entry.grid(row=3, column=1)
 
-order = Button(text="Order")
+
+
+size = size_entry.get()
+add_pepperoni = add_pepperoni_entry.get()
+extra_cheese = extra_cheese_entry.get()
+size_pizza = 0
+pepperoni = 0
+cheese = 0
+
+if size == "S":
+    size_pizza = 15
+elif size == "M":
+    size_pizza = 20
+elif size == "L":
+    size_pizza = 25
+
+if add_pepperoni == "Y" and size == "M" or size == "L":
+    pepperoni = 3
+elif add_pepperoni == "Y":
+    pepperoni = 2
+elif add_pepperoni == "N":
+    pepperoni = 0
+
+if extra_cheese == "Y":
+    cheese = 1
+elif extra_cheese == "N":
+    cheese = 0
+
+
+def price():
+    total = size_pizza + pepperoni + cheese
+    payment = f"${total}"
+    canvas.create_text(150, 50, text=f"{payment}", font=("Ariel", 13, "bold"))
+
+
+order = Button(text="Order", command=price)
 order.grid(row=4, column=0, columnspan=2)
 order.config(bg="green")
-# print()
-# size = input("What size pizza do you want? S, M or L? ")
-# add_pepperoni = input("Do you want pepperoni? Y or N ")
-# extra_cheese = input("Do you want extra cheese? Y or N ")
-
 
 window.mainloop()
