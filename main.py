@@ -6,9 +6,10 @@ window.config(padx=50, pady=50)
 
 comm = "Welcome to Python Pizza Deliveries!"
 canvas = Canvas(height=60, width=300, bg="Green")
-canvas.create_text(150, 30, text=f"{comm}", font=("Ariel", 13, "bold"))
 canvas.grid(row=0, column=0, columnspan=2)
 
+focus = Label(text=f"{comm}", font=("Ariel", 13, "bold"), bg="green")
+focus.place(x=23, y=25)
 size = Label(text="What size pizza do you want? S, M or L? ")
 size.grid(row=1, column=0)
 add_pepperoni = Label(text="Do you want pepperoni? Y or N ")
@@ -24,38 +25,36 @@ extra_cheese_entry = Entry()
 extra_cheese_entry.grid(row=3, column=1)
 
 
+def price():
+    pizza_size = size_entry.get().upper()
+    pizza_add_pepperoni = add_pepperoni_entry.get().upper()
+    pizza_extra_cheese = extra_cheese_entry.get().upper()
 
-size = size_entry.get()
-add_pepperoni = add_pepperoni_entry.get()
-extra_cheese = extra_cheese_entry.get()
-size_pizza = 0
-pepperoni = 0
-cheese = 0
-
-if size == "S":
-    size_pizza = 15
-elif size == "M":
-    size_pizza = 20
-elif size == "L":
-    size_pizza = 25
-
-if add_pepperoni == "Y" and size == "M" or size == "L":
-    pepperoni = 3
-elif add_pepperoni == "Y":
-    pepperoni = 2
-elif add_pepperoni == "N":
+    size_pizza = 0
     pepperoni = 0
-
-if extra_cheese == "Y":
-    cheese = 1
-elif extra_cheese == "N":
     cheese = 0
 
+    if pizza_size == "S":
+        size_pizza = 15
+    elif pizza_size == "M":
+        size_pizza = 20
+    elif pizza_size == "L":
+        size_pizza = 25
 
-def price():
+    if pizza_add_pepperoni == "Y" and (pizza_size == "M" or pizza_size == "L"):
+        pepperoni = 3
+    elif pizza_add_pepperoni == "Y":
+        pepperoni = 2
+    elif pizza_add_pepperoni == "N":
+        pepperoni = 0
+
+    if pizza_extra_cheese == "Y":
+        cheese = 1
+    elif pizza_extra_cheese == "N":
+        cheese = 0
+
     total = size_pizza + pepperoni + cheese
-    payment = f"${total}"
-    canvas.create_text(150, 50, text=f"{payment}", font=("Ariel", 13, "bold"))
+    focus.config(text=f"PAY ${total}")
 
 
 order = Button(text="Order", command=price)
